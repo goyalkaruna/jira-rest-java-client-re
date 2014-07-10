@@ -16,14 +16,7 @@
 
 package com.atlassian.jira.rest.client.api;
 
-import com.atlassian.jira.rest.client.api.domain.BasicIssue;
-import com.atlassian.jira.rest.client.api.domain.BulkOperationResult;
-import com.atlassian.jira.rest.client.api.domain.CimProject;
-import com.atlassian.jira.rest.client.api.domain.Comment;
-import com.atlassian.jira.rest.client.api.domain.Issue;
-import com.atlassian.jira.rest.client.api.domain.Transition;
-import com.atlassian.jira.rest.client.api.domain.Votes;
-import com.atlassian.jira.rest.client.api.domain.Watchers;
+import com.atlassian.jira.rest.client.api.domain.*;
 import com.atlassian.jira.rest.client.api.domain.input.AttachmentInput;
 import com.atlassian.jira.rest.client.api.domain.input.IssueInput;
 import com.atlassian.jira.rest.client.api.domain.input.LinkIssuesInput;
@@ -280,6 +273,12 @@ public interface IssueRestClient {
 	 * @param worklogInput worklog input object to create
 	 */
 	Promise<Void> addWorklog(URI worklogUri, WorklogInput worklogInput);
+
+	/**
+	 * Get worklog entries for issue.
+	 *
+	 */
+    Promise<Iterable<Worklog>> getWorklogs(URI issueUri, String issueKey);
 
 	/**
 	 * Expandos supported by {@link IssueRestClient#getIssue(String, Iterable)}

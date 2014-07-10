@@ -166,7 +166,16 @@ public class AsynchronousIssueRestClient extends AbstractAsynchronousRestClient 
 		return getAndParse(votesUri, votesJsonParser);
 	}
 
-	@Override
+    @Override
+    public Promise<Iterable<Worklog>> getWorklogs(URI issueUri, String issueKey) {
+        final UriBuilder uriBuilder = UriBuilder.fromUri(baseUri);
+        uriBuilder.path("issue").path(issueKey).path("worklog");
+
+        final WorklogJsonParserV5 jsonParser = new WorklogJsonParserV5(issueUri);
+        return getAndParse(uriBuilder.build(), new WorklogsJsonObjectParser(jsonParser));
+    }
+
+    @Override
 	public Promise<Iterable<Transition>> getTransitions(final URI transitionsUri) {
 		return callAndParse(client().newRequest(transitionsUri).get(),
 				new AbstractAsynchronousRestClient.ResponseHandler<Iterable<Transition>>() {
@@ -368,4 +377,5 @@ public class AsynchronousIssueRestClient extends AbstractAsynchronousRestClient 
 	private String getLoggedUsername() {
 		return sessionRestClient.getCurrentSession().claim().getUsername();
 	}
+
 }
