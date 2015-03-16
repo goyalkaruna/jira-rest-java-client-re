@@ -19,6 +19,7 @@ import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.api.AuthenticationHandler;
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.JiraRestClientFactory;
+import com.atlassian.jira.rest.client.auth.AnonymousAuthenticationHandler;
 import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
 
 import java.net.URI;
@@ -42,7 +43,12 @@ public class AsynchronousJiraRestClientFactory implements JiraRestClientFactory 
 		return create(serverUri, new BasicHttpAuthenticationHandler(username, password));
 	}
 
-	@Override
+    @Override
+    public JiraRestClient createWithAnonymousAccess(final URI serverUri) {
+        return create(serverUri, new AnonymousAuthenticationHandler());
+    }
+
+    @Override
 	public JiraRestClient create(final URI serverUri, final HttpClient httpClient) {
 		final DisposableHttpClient disposableHttpClient = new AsynchronousHttpClientFactory().createClient(httpClient);
 		return new AsynchronousJiraRestClient(serverUri, disposableHttpClient);

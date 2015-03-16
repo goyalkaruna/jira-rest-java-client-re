@@ -45,7 +45,15 @@ public interface JiraRestClientFactory {
 	 */
 	JiraRestClient createWithBasicHttpAuthentication(final URI serverUri, final String username, final String password);
 
-	/**
+    /**
+     * Creates an instance of JiraRestClient with default HttpClient settings. HttpClient will assure
+     * anonymous access.
+     *
+     * @param serverUri - URI or JIRA instance.
+     */
+    JiraRestClient createWithAnonymousAccess(final URI serverUri);
+
+    /**
 	 * Creates an instance of JiraRestClient with given Atlassian HttpClient.
 	 * Please note, that this com.atlassian.jira.rest.client.api has to be fully configured to do the request authentication.
 	 *
